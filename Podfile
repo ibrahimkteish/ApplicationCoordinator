@@ -6,6 +6,8 @@ target 'ApplicationCoordinator' do
   use_frameworks!
 
   # Pods for ApplicationCoordinator
+    pod 'RxSwift',    '~> 4.0'
+    pod 'RxCocoa',    '~> 4.0'
 
   target 'ApplicationCoordinatorTests' do
     inherit! :search_paths
