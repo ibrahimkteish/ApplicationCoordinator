@@ -1,4 +1,6 @@
+import RxSwift
+
 protocol ItemCreateView: BaseView {
-  var onHideButtonTap: (() -> Void)? { get set }
-  var onCompleteCreateItem: ((ItemList) -> ())? { get set }
+  var onHideButtonTap: PublishSubject<Void> { get }
+  var onCompleteCreateItem: PublishSubject<ItemList> { get }
 }

@@ -1,5 +1,8 @@
+
+import RxSwift
+
 protocol TabbarView: class {
-  var onItemFlowSelect: ((UINavigationController) -> ())? { get set }
-  var onSettingsFlowSelect: ((UINavigationController) -> ())? { get set }
-  var onViewDidLoad: ((UINavigationController) -> ())? { get set }
+  var onItemFlowSelect: PublishSubject<UINavigationController> { get }
+  var onSettingsFlowSelect: PublishSubject<UINavigationController> { get }
+  var onViewDidLoad: PublishSubject<UINavigationController> { get }
 }

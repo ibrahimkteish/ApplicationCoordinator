@@ -1,3 +1,5 @@
+import RxSwift
+
 protocol OnboardingCoordinatorOutput: class {
-  var finishFlow: (() -> Void)? { get set }
+  var finishFlow: PublishSubject<Void> { get }
 }

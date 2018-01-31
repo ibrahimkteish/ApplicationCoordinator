@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -46,9 +46,6 @@
                                     <constraint firstAttribute="width" constant="191" id="kLA-g3-JYr"/>
                                 </constraints>
                                 <state key="normal" title="Login"/>
-                                <connections>
-                                    <action selector="loginButtonClicked:" destination="zQv-zS-ySU" eventType="touchUpInside" id="gsB-cG-c0P"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XFP-wV-idQ">
                                 <rect key="frame" x="92" y="340" width="191" height="30"/>
@@ -57,9 +54,6 @@
                                     <constraint firstAttribute="height" constant="30" id="zfU-xy-Xtf"/>
                                 </constraints>
                                 <state key="normal" title="SignUp"/>
-                                <connections>
-                                    <action selector="signUpClicked:" destination="zQv-zS-ySU" eventType="touchUpInside" id="4aS-6e-Aze"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -74,6 +68,10 @@
                             <constraint firstItem="VUZ-zN-Uo1" firstAttribute="top" secondItem="jeV-I6-cyS" secondAttribute="bottom" constant="60" id="efh-Vb-5pO"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="login" destination="ee5-zy-TeX" id="Sp6-2R-hzm"/>
+                        <outlet property="signUp" destination="XFP-wV-idQ" id="bpy-6j-4jf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tp0-4d-VzL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -101,9 +99,6 @@
                                             <constraint firstAttribute="height" constant="30" id="utk-NM-kpk"/>
                                         </constraints>
                                         <state key="normal" title="SignUp"/>
-                                        <connections>
-                                            <action selector="signUpClicked:" destination="Mxu-2P-E0E" eventType="touchUpInside" id="sKw-qE-EFi"/>
-                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Terms of the agreement accepted!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1yU-gB-Djc">
                                         <rect key="frame" x="45" y="354" width="191" height="47"/>
@@ -122,9 +117,6 @@
                                             <constraint firstAttribute="width" constant="191" id="bn8-7r-ivy"/>
                                         </constraints>
                                         <state key="normal" title="Terms"/>
-                                        <connections>
-                                            <action selector="termsButtonClicked:" destination="Mxu-2P-E0E" eventType="touchUpInside" id="39b-4g-az0"/>
-                                        </connections>
                                     </button>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="More field to fill 😃 Just tap &quot;SignUp&quot;" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pqG-XE-N8b">
                                         <rect key="frame" x="11" y="74" width="259" height="37"/>
@@ -159,6 +151,7 @@
                     </view>
                     <connections>
                         <outlet property="signUpButton" destination="0VX-Fv-Fek" id="NLW-p1-D6y"/>
+                        <outlet property="terms" destination="aZE-sn-IA8" id="Mq2-tk-Ckf"/>
                         <outlet property="termsLabel" destination="1yU-gB-Djc" id="q7q-aM-yzu"/>
                     </connections>
                 </viewController>
@@ -186,9 +179,6 @@
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="RgU-EG-Djt">
                                 <rect key="frame" x="312" y="95" width="51" height="31"/>
-                                <connections>
-                                    <action selector="termsSwitchValueChanged:" destination="ZVD-Q4-MCA" eventType="valueChanged" id="xBl-LZ-MXV"/>
-                                </connections>
                             </switch>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

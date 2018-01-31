@@ -1,7 +1,9 @@
+import RxSwift
+
 final class ItemCreateCoordinator: BaseCoordinator, ItemCreateCoordinatorOutput {
   
-  var finishFlow: ((ItemList?)->())?
-  
+  let finishFlow = PublishSubject<ItemList?>()
+  let disposeBag = DisposeBag()
   private let factory: ItemCreateModuleFactory
   private let router: Router
   
@@ -18,12 +20,14 @@ final class ItemCreateCoordinator: BaseCoordinator, ItemCreateCoordinatorOutput 
   
   private func showCreate() {
     let createItemOutput = factory.makeItemAddOutput()
-    createItemOutput.onCompleteCreateItem = { [weak self] item in
-      self?.finishFlow?(item)
-    }
-    createItemOutput.onHideButtonTap = { [weak self] in
-      self?.finishFlow?(nil)
-    }
+    createItemOutput.onCompleteCreateItem.subscribe(onNext: { [weak self] item in
+      self?.finishFlow.onNext(item)
+    }).disposed(by: disposeBag)
+    
+    createItemOutput.onHideButtonTap.subscribe(onNext:{ [weak self] in
+      self?.finishFlow.onNext(nil)
+    }).disposed(by: disposeBag)
+    
     router.setRootModule(createItemOutput)
   }
 }

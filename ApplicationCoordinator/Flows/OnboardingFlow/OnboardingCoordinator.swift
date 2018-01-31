@@ -1,6 +1,8 @@
+import RxSwift
+
 class OnboardingCoordinator: BaseCoordinator, OnboardingCoordinatorOutput {
 
-  var finishFlow: (() -> Void)?
+  let finishFlow = PublishSubject<Void>()
   
   private let factory: OnboardingModuleFactory
   private let router: Router
@@ -16,9 +18,9 @@ class OnboardingCoordinator: BaseCoordinator, OnboardingCoordinatorOutput {
   
   func showOnboarding() {
     let onboardingModule = factory.makeOnboardingModule()
-    onboardingModule.onFinish = { [weak self] in
-      self?.finishFlow?()
-    }
+    onboardingModule.onFinish.subscribe(onNext: { [weak self] in
+      self?.finishFlow.onNext(())
+    })
     router.setRootModule(onboardingModule.toPresent())
   }
 }

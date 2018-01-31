@@ -1,3 +1,5 @@
+import RxSwift
+
 protocol OnboardingView: BaseView {
-  var onFinish: (() -> Void)? { get set }
+  var onFinish: PublishSubject<Void> { get }
 }

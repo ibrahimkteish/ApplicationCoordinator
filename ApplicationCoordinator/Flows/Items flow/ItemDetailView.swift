@@ -1,1 +1,1 @@
-protocol ItemDetailView: BaseView { }
+protocol ItemDetailView: BaseView {}

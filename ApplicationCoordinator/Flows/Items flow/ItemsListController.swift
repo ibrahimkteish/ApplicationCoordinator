@@ -1,11 +1,13 @@
+import RxSwift
+import RxCocoa
+
 final class ItemsListController: UIViewController, ItemsListView {
   
   //controller handler
-  var onItemSelect: ((ItemList) -> ())?
-  var onCreateItem: (() -> Void)?
-  
-  @IBAction func addItemButtonClicked(_ sender: UIBarButtonItem) { onCreateItem?() }
-  
+  let onItemSelect = PublishSubject<ItemList>()
+  let onCreateItem = PublishSubject<Void>()
+  private let disposeBag = DisposeBag()
+    
   @IBOutlet weak var tableView: UITableView!
   //mock datasource
   var items = (0...10).map { index in return ItemList(title: "Item № \(index)", subtitle: "Item descripton") }
@@ -17,9 +19,9 @@ final class ItemsListController: UIViewController, ItemsListView {
     title = "Items"
     navigationItem.rightBarButtonItem = UIBarButtonItem(
       barButtonSystemItem: .add,
-      target: self,
-      action: #selector(ItemsListController.addItemButtonClicked(_:))
-    )
+      target: nil,
+      action: nil)
+    navigationItem.rightBarButtonItem?.rx.tap.bind(to: onCreateItem).disposed(by: disposeBag)
   }
 }
 
@@ -42,7 +44,7 @@ extension ItemsListController: UITableViewDelegate, UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    onItemSelect?(items[(indexPath as NSIndexPath).row])
+    onItemSelect.onNext(items[(indexPath as NSIndexPath).row])
     tableView.deselectRow(at: indexPath, animated: true)
   }
 }

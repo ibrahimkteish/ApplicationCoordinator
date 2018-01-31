@@ -1,4 +1,8 @@
+import RxSwift
+
 class TabbarCoordinator: BaseCoordinator {
+  
+  private let disposeBag = DisposeBag()
   
   private let tabbarView: TabbarView
   private let coordinatorFactory: CoordinatorFactory
@@ -9,28 +13,28 @@ class TabbarCoordinator: BaseCoordinator {
   }
   
   override func start() {
-    tabbarView.onViewDidLoad = runItemFlow()
-    tabbarView.onItemFlowSelect = runItemFlow()
-    tabbarView.onSettingsFlowSelect = runSettingsFlow()
-  }
-  
-  private func runItemFlow() -> ((UINavigationController) -> ()) {
-    return { navController in
+    tabbarView.onViewDidLoad.subscribe(onNext: { [weak self] (navController) in
       if navController.viewControllers.isEmpty == true {
-        let itemCoordinator = self.coordinatorFactory.makeItemCoordinator(navController: navController)
+        guard let itemCoordinator = self?.coordinatorFactory.makeItemCoordinator(navController: navController) else { return }
         itemCoordinator.start()
-        self.addDependency(itemCoordinator)
+        self?.addDependency(itemCoordinator)
       }
-    }
-  }
-  
-  private func runSettingsFlow() -> ((UINavigationController) -> ()) {
-    return { navController in
+    }).disposed(by: disposeBag)
+    
+    tabbarView.onItemFlowSelect.subscribe(onNext: { [weak self] (navController) in
       if navController.viewControllers.isEmpty == true {
-        let settingsCoordinator = self.coordinatorFactory.makeSettingsCoordinator(navController: navController)
-        settingsCoordinator.start()
-        self.addDependency(settingsCoordinator)
+        guard let itemCoordinator = self?.coordinatorFactory.makeItemCoordinator(navController: navController) else { return }
+        itemCoordinator.start()
+        self?.addDependency(itemCoordinator)
       }
-    }
+    }).disposed(by: disposeBag)
+    
+    tabbarView.onSettingsFlowSelect.subscribe(onNext: { [weak self] (navController) in
+      if navController.viewControllers.isEmpty == true {
+        guard let settingsCoordinator = self?.coordinatorFactory.makeSettingsCoordinator(navController: navController) else { return }
+        settingsCoordinator.start()
+        self?.addDependency(settingsCoordinator)
+      }
+    }).disposed(by: disposeBag)
   }
 }

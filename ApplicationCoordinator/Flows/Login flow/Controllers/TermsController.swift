@@ -1,12 +1,14 @@
+import RxSwift
+import RxCocoa
+
 class TermsController: UIViewController, TermsView {
+  private let disposeBag = DisposeBag()
+  @IBOutlet weak var termsSwitch: UISwitch!
   
-  @IBOutlet weak var termsSwitch: UISwitch! {
-    didSet { termsSwitch.isOn = confirmed }
-  }
-  var confirmed = false
-  var onConfirmChanged: ((Bool) -> ())?
+  let onConfirmChanged = PublishSubject<Bool>()
   
-  @IBAction func termsSwitchValueChanged(_ sender: UISwitch) {
-    onConfirmChanged?(sender.isOn)
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    self.termsSwitch.rx.isOn.bind(to: onConfirmChanged).disposed(by: disposeBag)
   }
 }

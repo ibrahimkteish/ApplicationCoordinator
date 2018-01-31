@@ -59,7 +59,7 @@ class AuthCoordinatorTest: XCTestCase {
         
         coordinator.start()
         // onSignUpButtonTap event
-        loginOutput.onSignUpButtonTap!()
+        loginOutput.onSignUpButtonTap.onNext(())
         XCTAssertTrue(router.navigationStack.last is SignUpController)
         XCTAssertTrue(router.navigationStack.count == 2)
     }
@@ -69,9 +69,9 @@ class AuthCoordinatorTest: XCTestCase {
         //show login controller
         coordinator.start()
         // show signUp controller
-        loginOutput.onSignUpButtonTap!()
+        loginOutput.onSignUpButtonTap.onNext(())
         //show terms controller
-        signUpOutput.onTermsButtonTap!()
+        signUpOutput.onTermsButtonTap.onNext(())
         XCTAssertTrue(router.navigationStack.last is TermsController)
         XCTAssertTrue(router.navigationStack.count == 3)
     }

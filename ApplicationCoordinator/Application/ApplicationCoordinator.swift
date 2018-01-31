@@ -1,3 +1,5 @@
+import RxSwift
+
 fileprivate var onboardingWasShown = false
 fileprivate var isAutorized = false
 
@@ -18,6 +20,7 @@ fileprivate enum LaunchInstructor {
 
 final class ApplicationCoordinator: BaseCoordinator {
   
+  private let disposeBag = DisposeBag()
   private let coordinatorFactory: CoordinatorFactory
   private let router: Router
   
@@ -52,22 +55,23 @@ final class ApplicationCoordinator: BaseCoordinator {
   
   private func runAuthFlow() {
     let coordinator = coordinatorFactory.makeAuthCoordinatorBox(router: router)
-    coordinator.finishFlow = { [weak self, weak coordinator] in
+    coordinator.finishFlow.subscribe(onNext: {  [weak self, weak coordinator] (_) in
       isAutorized = true
       self?.start()
       self?.removeDependency(coordinator)
-    }
+    }).disposed(by: disposeBag)
+    
     addDependency(coordinator)
     coordinator.start()
   }
   
   private func runOnboardingFlow() {
     let coordinator = coordinatorFactory.makeOnboardingCoordinator(router: router)
-    coordinator.finishFlow = { [weak self, weak coordinator] in
+    coordinator.finishFlow.subscribe(onNext: { [weak self, weak coordinator] in
       onboardingWasShown = true
       self?.start()
       self?.removeDependency(coordinator)
-    }
+    }).disposed(by: disposeBag)
     addDependency(coordinator)
     coordinator.start()
   }

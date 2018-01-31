@@ -1,4 +1,6 @@
+import RxSwift
+
 protocol LoginView: BaseView {
-  var onCompleteAuth: (() -> Void)? { get set }
-  var onSignUpButtonTap: (() -> Void)? { get set }
+  var onCompleteAuth: PublishSubject<Void> { get }
+  var onSignUpButtonTap: PublishSubject<Void> { get }
 }

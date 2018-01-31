@@ -1,15 +1,18 @@
+import RxSwift
+
 final class TabbarController: UITabBarController, UITabBarControllerDelegate, TabbarView {
   
-  var onItemFlowSelect: ((UINavigationController) -> ())?
-  var onSettingsFlowSelect: ((UINavigationController) -> ())?
-  var onViewDidLoad: ((UINavigationController) -> ())?
+  
+  let onItemFlowSelect: PublishSubject<UINavigationController> = PublishSubject()
+  let onViewDidLoad: PublishSubject<UINavigationController> = PublishSubject()
+  let onSettingsFlowSelect: PublishSubject<UINavigationController> = PublishSubject()
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
     delegate = self
     if let controller = customizableViewControllers?.first as? UINavigationController {
-      onViewDidLoad?(controller)
+      onViewDidLoad.onNext(controller)
     }
   }
   
@@ -17,10 +20,10 @@ final class TabbarController: UITabBarController, UITabBarControllerDelegate, Ta
     guard let controller = viewControllers?[selectedIndex] as? UINavigationController else { return }
     
     if selectedIndex == 0 {
-      onItemFlowSelect?(controller)
+      onItemFlowSelect.onNext(controller)
     }
     else if selectedIndex == 1 {
-      onSettingsFlowSelect?(controller)
+      onSettingsFlowSelect.onNext(controller)
     }
   }
 }

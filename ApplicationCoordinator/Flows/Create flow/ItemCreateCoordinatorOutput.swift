@@ -1,3 +1,6 @@
+import RxSwift
 protocol ItemCreateCoordinatorOutput: class {
-  var finishFlow: ((ItemList?)->())? { get set }
+  var finishFlow: PublishSubject<ItemList?> { get }
+  var disposeBag: DisposeBag { get }
+
 }

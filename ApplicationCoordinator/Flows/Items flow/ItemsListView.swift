@@ -1,4 +1,6 @@
+import RxSwift
+
 protocol ItemsListView: BaseView {
-  var onItemSelect: ((ItemList) -> ())? { get set }
-  var onCreateItem: (() -> Void)? { get set }
+  var onItemSelect: PublishSubject<ItemList> { get }
+  var onCreateItem: PublishSubject<Void> { get }
 }

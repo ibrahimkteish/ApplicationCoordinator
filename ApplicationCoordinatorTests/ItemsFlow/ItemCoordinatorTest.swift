@@ -8,6 +8,7 @@
 
 import XCTest
 @testable import ApplicationCoordinator
+@testable import RxSwift
 
 class ItemCoordinatorTest: XCTestCase {
     
@@ -52,7 +53,7 @@ class ItemCoordinatorTest: XCTestCase {
     func testShowItemDetail() {
         
         coordinator.start()
-        itemListOutput.onItemSelect!(ItemList(title: "", subtitle: ""))
+        itemListOutput.onItemSelect.onNext(ItemList(title: "", subtitle: ""))
         XCTAssertTrue(router.navigationStack.last is ItemDetailController)
         XCTAssertTrue(router.navigationStack.count == 2)
         
